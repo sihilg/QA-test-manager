@@ -1,0 +1,13 @@
+{
+  "name": "qa-test-manager",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev:web": "pnpm --dir apps/web dev",
+    "build:web": "pnpm --dir apps/web build",
+    "lint:web": "pnpm --dir apps/web lint",
+    "test:web": "pnpm --dir apps/web test --run",
+    "check": "pnpm lint:web && pnpm test:web && pnpm build:web"
+  }
+}
