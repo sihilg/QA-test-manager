@@ -4,7 +4,7 @@ Aplicação web local para gerir projetos, casos de teste, execuções e incidê
 
 ## Estado
 
-Fundação técnica da Release 0, com modelo de dados inicial em desenvolvimento. Ainda não existem autenticação, endpoints de negócio, interface funcional ou integração da Eva.
+Fundação técnica da Release 0, com modelo de dados e autenticação local em desenvolvimento. Ainda não existem CRUDs de negócio ou integração da Eva.
 
 ## Arquitetura
 
@@ -49,6 +49,14 @@ pnpm dev:web
 - Web: `http://localhost:5173`
 - API: `http://localhost:8000`
 - Health check: `http://localhost:8000/health`
+
+Na primeira utilização, aplique as migrações e crie o utilizador local chamado `Admin`. Informe o email de login e defina a palavra-passe de forma interativa; ela nunca fica no código:
+
+```bash
+cd apps/api
+python -m alembic upgrade head
+python -m qa_test_manager.bootstrap_admin
+```
 
 ## Verificações
 

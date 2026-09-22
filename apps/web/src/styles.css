@@ -27,5 +27,20 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 .eyebrow { margin: 0 0 1rem; color: #63dfa7; font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 h1 { margin: 0; font-size: clamp(2.5rem, 8vw, 5rem); letter-spacing: -.06em; line-height: .95; }
 .summary { max-width: 58ch; margin: 1.5rem 0 2rem; color: #aebdd2; font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.65; }
-.status { display: inline-flex; gap: .65rem; align-items: center; color: #dce8f8; font-weight: 600; }
-.status span { width: .7rem; height: .7rem; border-radius: 50%; background: #42d392; box-shadow: 0 0 1rem #42d392; }
+.login-form { display: grid; gap: .75rem; margin-top: 1.5rem; }
+.login-form .summary { margin: 0 0 1rem; }
+label, dt { color: #aebdd2; font-size: .85rem; font-weight: 700; }
+input { width: 100%; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
+input:focus { outline: 3px solid rgb(99 223 167 / 35%); border-color: #63dfa7; }
+.password-field { position: relative; }
+.password-field input { padding-right: 3.25rem; }
+.password-toggle { position: absolute; top: 50%; right: .4rem; display: grid; width: 2.5rem; height: 2.5rem; margin: 0; padding: .55rem; transform: translateY(-50%); place-items: center; color: #aebdd2; background: transparent; }
+.password-toggle:hover, .password-toggle:focus-visible { color: #63dfa7; background: rgb(99 223 167 / 10%); }
+.password-toggle svg { width: 1.35rem; height: 1.35rem; fill: none; stroke: currentcolor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+button { margin-top: .75rem; padding: .9rem 1.25rem; border: 0; border-radius: .75rem; color: #07111f; background: #63dfa7; font: inherit; font-weight: 800; cursor: pointer; }
+button:disabled { cursor: wait; opacity: .65; }
+button.secondary { color: #e8eef8; background: #243b55; }
+.error { color: #ff9b9b; }
+.session-panel dl { display: grid; gap: .75rem; }
+.session-panel dl div { display: grid; grid-template-columns: 5rem 1fr; gap: 1rem; }
+.session-panel dd { margin: 0; }
