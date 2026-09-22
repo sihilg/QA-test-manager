@@ -66,5 +66,12 @@ jobs:
       - name: Type check
         run: python -m mypy src
 
+      - name: Validate migrations
+        env:
+          QA_TEST_MANAGER_DATABASE_URL: sqlite:///./ci-migrations.db
+        run: |
+          python -m alembic heads
+          python -m alembic upgrade head
+
       - name: Test
         run: python -m pytest

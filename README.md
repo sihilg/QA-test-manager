@@ -4,7 +4,7 @@ Aplicação web local para gerir projetos, casos de teste, execuções e incidê
 
 ## Estado
 
-Fundação técnica da Release 0. Ainda não existem autenticação, entidades de negócio ou integração da Eva.
+Fundação técnica da Release 0, com modelo de dados inicial em desenvolvimento. Ainda não existem autenticação, endpoints de negócio, interface funcional ou integração da Eva.
 
 ## Arquitetura
 
@@ -57,6 +57,7 @@ pnpm check
 python -m pytest apps/api/tests
 python -m ruff check apps/api
 python -m mypy apps/api/src
+cd apps/api && python -m alembic upgrade head
 ```
 
 ## Privacidade
