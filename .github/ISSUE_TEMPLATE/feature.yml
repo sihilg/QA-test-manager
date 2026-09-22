@@ -1,0 +1,38 @@
+name: Feature request
+description: Propor uma melhoria delimitada para o produto.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: Que necessidade esta alteração resolve?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Resultado observável
+      description: Como saberemos que a funcionalidade está concluída?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Dentro do escopo
+      placeholder: Liste comportamentos concretos.
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Fora do escopo
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+      placeholder: Given... when... then...
+    validations:
+      required: true

@@ -1,0 +1,50 @@
+name: Bug report
+description: Reportar um comportamento incorreto e reproduzível.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Obrigado por ajudar a melhorar o QA Test Manager. Não inclua dados reais ou credenciais.
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição
+      description: O que aconteceu?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. Abrir...
+        2. Selecionar...
+        3. Observar...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado obtido
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Ambiente local
+      description: Versões do Windows, Node.js, pnpm e Python.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Verificações
+      options:
+        - label: Confirmei que o relatório não contém credenciais nem dados pessoais.
+          required: true
