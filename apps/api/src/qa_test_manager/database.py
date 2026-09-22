@@ -1,10 +1,12 @@
 from collections.abc import Iterator
 from os import environ
+from pathlib import Path
 
 from sqlalchemy import Engine, create_engine, event
 from sqlalchemy.orm import Session, sessionmaker
 
-DEFAULT_DATABASE_URL = "sqlite:///./qa-test-manager.db"
+DEFAULT_DATABASE_PATH = Path(__file__).resolve().parents[2] / "qa-test-manager.db"
+DEFAULT_DATABASE_URL = f"sqlite:///{DEFAULT_DATABASE_PATH.as_posix()}"
 
 
 def create_database_engine(database_url: str | None = None) -> Engine:
