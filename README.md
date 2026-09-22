@@ -4,7 +4,7 @@ Aplicação web local para gerir projetos, casos de teste, execuções e incidê
 
 ## Estado
 
-Fundação técnica da Release 0, com modelo de dados e autenticação local em desenvolvimento. Ainda não existem CRUDs de negócio ou integração da Eva.
+Release 1 em desenvolvimento, com modelo de dados, autenticação local e gestão de projetos. Ainda não existem gestão de utilizadores, casos de teste ou integração da Eva.
 
 ## Arquitetura
 
