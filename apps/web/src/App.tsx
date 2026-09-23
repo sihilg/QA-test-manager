@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 
 import { Projects } from "./Projects";
+import { Users } from "./Users";
 
 type User = { id: number; name: string; email: string; role: "ADMIN" | "TESTER" | "DEV" };
 type LoginResponse = { user: User; csrf_token: string };
@@ -11,6 +12,7 @@ export function App() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [view, setView] = useState<"projects" | "users">("projects");
 
   useEffect(() => {
     fetch("/api/auth/session", { credentials: "include" })
@@ -56,13 +58,16 @@ export function App() {
     if (response.ok) {
       setUser(null);
       setCsrfToken("");
+      setView("projects");
     }
   }
 
   return (
     <main className="shell">
       {user ? (
-        <Projects user={user} csrfToken={csrfToken} onLogout={handleLogout} />
+        view === "users" && user.role === "ADMIN" ?
+          <Users currentUser={user} csrfToken={csrfToken} onProjects={() => setView("projects")} onLogout={handleLogout} /> :
+          <Projects user={user} csrfToken={csrfToken} onUsers={() => setView("users")} onLogout={handleLogout} />
       ) : <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">Ambiente local · acesso privado</p>
         <h1 id="page-title">QA Test Manager</h1>

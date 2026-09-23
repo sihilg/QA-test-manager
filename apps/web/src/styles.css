@@ -30,6 +30,7 @@ h1 { margin: 0; font-size: clamp(2.5rem, 8vw, 5rem); letter-spacing: -.06em; lin
 .login-form .summary { margin: 0 0 1rem; }
 label, dt { color: #aebdd2; font-size: .85rem; font-weight: 700; }
 input { width: 100%; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
+select { width: 100%; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
 textarea { width: 100%; resize: vertical; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
 input:focus { outline: 3px solid rgb(99 223 167 / 35%); border-color: #63dfa7; }
 .password-field { position: relative; }
@@ -37,6 +38,7 @@ input:focus { outline: 3px solid rgb(99 223 167 / 35%); border-color: #63dfa7; }
 .password-toggle { position: absolute; top: 50%; right: .4rem; display: grid; width: 2.5rem; height: 2.5rem; margin: 0; padding: .55rem; transform: translateY(-50%); place-items: center; color: #aebdd2; background: transparent; }
 .password-toggle:hover, .password-toggle:focus-visible { color: #63dfa7; background: rgb(99 223 167 / 10%); }
 .password-toggle svg { width: 1.35rem; height: 1.35rem; fill: none; stroke: currentcolor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.password-toggle.text-toggle { width: auto; padding-inline: .75rem; font-size: .75rem; font-weight: 700; }
 button { margin-top: .75rem; padding: .9rem 1.25rem; border: 0; border-radius: .75rem; color: #07111f; background: #63dfa7; font: inherit; font-weight: 800; cursor: pointer; }
 button:disabled { cursor: wait; opacity: .65; }
 button.secondary { color: #e8eef8; background: #243b55; }
@@ -47,6 +49,7 @@ button.secondary { color: #e8eef8; background: #243b55; }
 .workspace { width: min(1120px, 100%); margin: 0 auto; }
 .app-header { display: flex; gap: 2rem; align-items: flex-start; justify-content: space-between; padding: 1rem 0 2rem; }
 .app-header h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+.header-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
 .welcome { margin: 1rem 0 0; color: #aebdd2; }
 .panel { margin-bottom: 1.5rem; padding: clamp(1.25rem, 4vw, 2rem); border: 1px solid rgb(255 255 255 / 12%); border-radius: 1.25rem; background: rgb(12 27 47 / 88%); }
 .panel h2, .panel h3 { margin-top: 0; }
@@ -63,10 +66,19 @@ button.tertiary { margin: 0; padding: .65rem .9rem; color: #dce8f8; background: 
 button.danger { margin: 0; padding: .65rem .9rem; color: #ffd7d7; background: #6d2730; }
 .empty-state { padding: 2rem; color: #aebdd2; text-align: center; border: 1px dashed #304763; border-radius: 1rem; }
 .notice { color: #8ce9bb; }
+.field-help { margin-top: -.35rem; color: #8fa2bc; line-height: 1.4; }
 .pagination { justify-content: center; margin-top: 1.5rem; }
 .dialog-backdrop { position: fixed; inset: 0; display: grid; padding: 1.5rem; place-items: center; background: rgb(3 10 18 / 78%); }
 .dialog { width: min(560px, 100%); padding: 2rem; border: 1px solid #3b5573; border-radius: 1.25rem; background: #0c1b2f; box-shadow: 0 2rem 6rem rgb(0 0 0 / 55%); }
 .dialog-actions { justify-content: flex-end; }
+.user-table-wrapper { overflow-x: auto; margin-top: 1rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: .9rem; border-bottom: 1px solid #263e5a; text-align: left; white-space: nowrap; }
+th { color: #aebdd2; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+.active-badge, .inactive-badge, .you-badge { display: inline-block; padding: .2rem .5rem; border-radius: 999px; font-size: .72rem; font-weight: 800; }
+.active-badge { color: #8ce9bb; background: rgb(66 211 146 / 12%); }
+.inactive-badge { color: #ffb0b0; background: rgb(170 50 65 / 20%); }
+.you-badge { margin-left: .5rem; color: #acd0ff; background: rgb(31 109 255 / 18%); }
 @media (max-width: 640px) {
   .shell { padding: 1rem; }
   .app-header, .project-card { align-items: stretch; flex-direction: column; }

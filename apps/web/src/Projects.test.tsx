@@ -16,7 +16,7 @@ describe("Projects", () => {
       }),
     );
 
-    render(<Projects user={admin} csrfToken="csrf" onLogout={vi.fn()} />);
+    render(<Projects user={admin} csrfToken="csrf" onLogout={vi.fn()} onUsers={vi.fn()} />);
 
     await waitFor(() => expect(screen.getByText("Ainda não existem projetos ativos.")).not.toBeNull());
   });
@@ -33,7 +33,7 @@ describe("Projects", () => {
       .mockResolvedValueOnce(jsonResponse(emptyPage))
       .mockResolvedValueOnce(jsonResponse(project, 201))
       .mockResolvedValueOnce(jsonResponse({ ...emptyPage, items: [project], total: 1 }));
-    render(<Projects user={admin} csrfToken="csrf" onLogout={vi.fn()} />);
+    render(<Projects user={admin} csrfToken="csrf" onLogout={vi.fn()} onUsers={vi.fn()} />);
     await screen.findByText("Ainda não existem projetos ativos.");
 
     fireEvent.change(screen.getByLabelText("Nome"), { target: { value: "Portal QA" } });

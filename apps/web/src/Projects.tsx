@@ -12,7 +12,7 @@ type ProjectPage = { items: Project[]; total: number; offset: number; limit: num
 
 const PAGE_SIZE = 10;
 
-export function Projects({ user, csrfToken, onLogout }: { user: User; csrfToken: string; onLogout: () => void }) {
+export function Projects({ user, csrfToken, onLogout, onUsers }: { user: User; csrfToken: string; onLogout: () => void; onUsers: () => void }) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [total, setTotal] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -110,7 +110,10 @@ export function Projects({ user, csrfToken, onLogout }: { user: User; csrfToken:
           <h1>Projetos</h1>
           <p className="welcome">Olá, {user.name}. Selecione um projeto para organizar os testes.</p>
         </div>
-        <button type="button" className="secondary" onClick={onLogout}>Terminar sessão</button>
+        <div className="header-actions">
+          {user.role === "ADMIN" && <button type="button" className="secondary" onClick={onUsers}>Utilizadores</button>}
+          <button type="button" className="secondary" onClick={onLogout}>Terminar sessão</button>
+        </div>
       </header>
 
       {user.role === "ADMIN" && (
