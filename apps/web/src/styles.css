@@ -9,15 +9,14 @@
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; min-height: 100vh; }
 .shell {
-  display: grid;
   min-height: 100vh;
-  place-items: center;
   padding: 2rem;
   background: radial-gradient(circle at 15% 15%, rgb(31 109 255 / 20%), transparent 35%),
     radial-gradient(circle at 85% 75%, rgb(66 211 146 / 16%), transparent 30%), #07111f;
 }
 .hero {
   width: min(720px, 100%);
+  margin: max(2rem, 8vh) auto;
   padding: clamp(2rem, 7vw, 5rem);
   border: 1px solid rgb(255 255 255 / 12%);
   border-radius: 2rem;
@@ -31,6 +30,7 @@ h1 { margin: 0; font-size: clamp(2.5rem, 8vw, 5rem); letter-spacing: -.06em; lin
 .login-form .summary { margin: 0 0 1rem; }
 label, dt { color: #aebdd2; font-size: .85rem; font-weight: 700; }
 input { width: 100%; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
+textarea { width: 100%; resize: vertical; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
 input:focus { outline: 3px solid rgb(99 223 167 / 35%); border-color: #63dfa7; }
 .password-field { position: relative; }
 .password-field input { padding-right: 3.25rem; }
@@ -44,3 +44,31 @@ button.secondary { color: #e8eef8; background: #243b55; }
 .session-panel dl { display: grid; gap: .75rem; }
 .session-panel dl div { display: grid; grid-template-columns: 5rem 1fr; gap: 1rem; }
 .session-panel dd { margin: 0; }
+.workspace { width: min(1120px, 100%); margin: 0 auto; }
+.app-header { display: flex; gap: 2rem; align-items: flex-start; justify-content: space-between; padding: 1rem 0 2rem; }
+.app-header h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+.welcome { margin: 1rem 0 0; color: #aebdd2; }
+.panel { margin-bottom: 1.5rem; padding: clamp(1.25rem, 4vw, 2rem); border: 1px solid rgb(255 255 255 / 12%); border-radius: 1.25rem; background: rgb(12 27 47 / 88%); }
+.panel h2, .panel h3 { margin-top: 0; }
+.project-form { display: grid; gap: .75rem; }
+.project-form button[type="submit"] { justify-self: start; }
+.section-heading { display: flex; gap: 1rem; align-items: center; justify-content: space-between; }
+.section-heading p { margin: .25rem 0 0; color: #aebdd2; }
+.project-grid { display: grid; gap: 1rem; margin-top: 1.25rem; }
+.project-card { display: flex; gap: 1rem; align-items: center; justify-content: space-between; padding: 1.25rem; border: 1px solid #263e5a; border-radius: 1rem; background: #0a1829; }
+.project-card h3 { margin-bottom: .4rem; }
+.project-card p { margin: 0; color: #aebdd2; }
+.card-actions, .dialog-actions, .pagination { display: flex; gap: .75rem; align-items: center; }
+button.tertiary { margin: 0; padding: .65rem .9rem; color: #dce8f8; background: transparent; border: 1px solid #3b5573; }
+button.danger { margin: 0; padding: .65rem .9rem; color: #ffd7d7; background: #6d2730; }
+.empty-state { padding: 2rem; color: #aebdd2; text-align: center; border: 1px dashed #304763; border-radius: 1rem; }
+.notice { color: #8ce9bb; }
+.pagination { justify-content: center; margin-top: 1.5rem; }
+.dialog-backdrop { position: fixed; inset: 0; display: grid; padding: 1.5rem; place-items: center; background: rgb(3 10 18 / 78%); }
+.dialog { width: min(560px, 100%); padding: 2rem; border: 1px solid #3b5573; border-radius: 1.25rem; background: #0c1b2f; box-shadow: 0 2rem 6rem rgb(0 0 0 / 55%); }
+.dialog-actions { justify-content: flex-end; }
+@media (max-width: 640px) {
+  .shell { padding: 1rem; }
+  .app-header, .project-card { align-items: stretch; flex-direction: column; }
+  .card-actions { flex-wrap: wrap; }
+}

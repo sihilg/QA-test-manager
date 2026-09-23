@@ -78,6 +78,9 @@ class User(TimestampMixin, Base):
     sessions: Mapped[list["AuthSession"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
+    project_memberships: Mapped[list["ProjectMember"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan"
+    )
 
 
 class AuthSession(Base):
@@ -98,21 +101,45 @@ class AuthSession(Base):
 
 class Project(TimestampMixin, Base):
     __tablename__ = "projects"
-    __table_args__ = (CheckConstraint("next_case_sequence >= 1", name="ck_project_next_sequence"),)
+    __table_args__ = (
+        CheckConstraint("next_case_sequence >= 1", name="ck_project_next_sequence"),
+        CheckConstraint("version >= 1", name="ck_project_version"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(160), unique=True)
     description: Mapped[str] = mapped_column(Text, default="")
     next_case_sequence: Mapped[int] = mapped_column(Integer, default=1)
     archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    version: Mapped[int] = mapped_column(Integer, default=1)
 
     test_cases: Mapped[list["TestCase"]] = relationship(
         back_populates="project", cascade="all, delete-orphan"
     )
+    members: Mapped[list["ProjectMember"]] = relationship(
+        back_populates="project", cascade="all, delete-orphan"
+    )
+
+    __mapper_args__ = {"version_id_col": version}
 
     @property
     def is_archived(self) -> bool:
         return self.archived_at is not None
+
+
+class ProjectMember(Base):
+    __tablename__ = "project_members"
+
+    project_id: Mapped[int] = mapped_column(
+        ForeignKey("projects.id", ondelete="CASCADE"), primary_key=True
+    )
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    assigned_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+
+    project: Mapped[Project] = relationship(back_populates="members")
+    user: Mapped[User] = relationship(back_populates="project_memberships")
 
 
 class TestCase(TimestampMixin, Base):

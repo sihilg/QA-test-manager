@@ -1,5 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 
+import { Projects } from "./Projects";
+
 type User = { id: number; name: string; email: string; role: "ADMIN" | "TESTER" | "DEV" };
 type LoginResponse = { user: User; csrf_token: string };
 
@@ -59,19 +61,11 @@ export function App() {
 
   return (
     <main className="shell">
-      <section className="hero" aria-labelledby="page-title">
+      {user ? (
+        <Projects user={user} csrfToken={csrfToken} onLogout={handleLogout} />
+      ) : <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">Ambiente local · acesso privado</p>
         <h1 id="page-title">QA Test Manager</h1>
-        {user ? (
-          <div className="session-panel">
-            <p className="summary">Sessão iniciada como {user.name}.</p>
-            <dl>
-              <div><dt>Email</dt><dd>{user.email}</dd></div>
-              <div><dt>Perfil</dt><dd>{user.role}</dd></div>
-            </dl>
-            <button type="button" className="secondary" onClick={handleLogout}>Terminar sessão</button>
-          </div>
-        ) : (
           <form className="login-form" onSubmit={handleLogin}>
             <p className="summary">Entre com o Admin criado localmente. Nenhum dado é enviado para a cloud.</p>
             <label htmlFor="email">Email</label>
@@ -107,8 +101,7 @@ export function App() {
             {error && <p className="error" role="alert">{error}</p>}
             <button type="submit" disabled={loading}>{loading ? "A entrar…" : "Entrar"}</button>
           </form>
-        )}
-      </section>
+      </section>}
     </main>
   );
 }

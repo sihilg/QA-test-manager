@@ -114,6 +114,11 @@ def require_roles(*roles: UserRole) -> Callable[[AuthContext], User]:
     return dependency
 
 
+def ensure_roles(user: User, *roles: UserRole) -> None:
+    if user.role not in roles:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Acesso proibido.")
+
+
 def refresh_session(context: AuthContext, database: Session) -> SessionResponse:
     csrf_token = new_token()
     context.session.csrf_token_hash = digest_token(csrf_token)

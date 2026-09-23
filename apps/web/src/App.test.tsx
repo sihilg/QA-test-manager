@@ -41,6 +41,6 @@ describe("App", () => {
     fireEvent.change(screen.getByLabelText("Palavra-passe"), { target: { value: "password" } });
     fireEvent.click(screen.getByRole("button", { name: "Entrar" }));
 
-    await waitFor(() => expect(screen.getByText("Sessão iniciada como Admin Local.")).not.toBeNull());
+    await waitFor(() => expect(screen.getByText("Olá, Admin Local. Selecione um projeto para organizar os testes.")).not.toBeNull());
   });
 });
