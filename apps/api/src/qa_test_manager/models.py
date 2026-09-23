@@ -67,6 +67,7 @@ class TimestampMixin:
 
 class User(TimestampMixin, Base):
     __tablename__ = "users"
+    __table_args__ = (CheckConstraint("version >= 1", name="ck_user_version"),)
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(120))
@@ -74,6 +75,7 @@ class User(TimestampMixin, Base):
     password_hash: Mapped[str] = mapped_column(String(255))
     role: Mapped[UserRole] = mapped_column(Enum(UserRole, native_enum=False))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    version: Mapped[int] = mapped_column(Integer, default=1)
 
     sessions: Mapped[list["AuthSession"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
@@ -81,6 +83,8 @@ class User(TimestampMixin, Base):
     project_memberships: Mapped[list["ProjectMember"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
+
+    __mapper_args__ = {"version_id_col": version}
 
 
 class AuthSession(Base):
