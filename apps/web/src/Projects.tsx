@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 
 type User = { id: number; name: string; email: string; role: "ADMIN" | "TESTER" | "DEV" };
-type Project = {
+export type Project = {
   id: number;
   name: string;
   description: string;
@@ -12,7 +12,7 @@ type ProjectPage = { items: Project[]; total: number; offset: number; limit: num
 
 const PAGE_SIZE = 10;
 
-export function Projects({ user, csrfToken, onLogout, onUsers }: { user: User; csrfToken: string; onLogout: () => void; onUsers: () => void }) {
+export function Projects({ user, csrfToken, onLogout, onUsers, onOpenProject }: { user: User; csrfToken: string; onLogout: () => void; onUsers: () => void; onOpenProject: (project: Project) => void }) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [total, setTotal] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -145,10 +145,10 @@ export function Projects({ user, csrfToken, onLogout, onUsers }: { user: User; c
             {projects.map((project) => (
               <article className="project-card" key={project.id}>
                 <div><h3>{project.name}</h3><p>{project.description || "Sem descrição."}</p></div>
-                {user.role === "ADMIN" && <div className="card-actions">
-                  <button type="button" className="tertiary" onClick={() => setEditing(project)}>Editar</button>
-                  <button type="button" className="danger" onClick={() => archiveProject(project)}>Arquivar</button>
-                </div>}
+                <div className="card-actions">
+                  <button type="button" onClick={() => onOpenProject(project)}>Abrir casos</button>
+                  {user.role === "ADMIN" && <><button type="button" className="tertiary" onClick={() => setEditing(project)}>Editar</button><button type="button" className="danger" onClick={() => archiveProject(project)}>Arquivar</button></>}
+                </div>
               </article>
             ))}
           </div>
