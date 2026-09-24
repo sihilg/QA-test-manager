@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 
-import { Projects } from "./Projects";
+import { Project, Projects } from "./Projects";
+import { TestCases } from "./TestCases";
 import { Users } from "./Users";
 
 type User = { id: number; name: string; email: string; role: "ADMIN" | "TESTER" | "DEV" };
@@ -12,7 +13,8 @@ export function App() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [view, setView] = useState<"projects" | "users">("projects");
+  const [view, setView] = useState<"projects" | "users" | "cases">("projects");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     fetch("/api/auth/session", { credentials: "include" })
@@ -59,15 +61,18 @@ export function App() {
       setUser(null);
       setCsrfToken("");
       setView("projects");
+      setSelectedProject(null);
     }
   }
 
   return (
     <main className="shell">
       {user ? (
+        view === "cases" && selectedProject ?
+          <TestCases user={user} project={selectedProject} csrfToken={csrfToken} onBack={() => setView("projects")} onLogout={handleLogout} /> :
         view === "users" && user.role === "ADMIN" ?
           <Users currentUser={user} csrfToken={csrfToken} onProjects={() => setView("projects")} onLogout={handleLogout} /> :
-          <Projects user={user} csrfToken={csrfToken} onUsers={() => setView("users")} onLogout={handleLogout} />
+          <Projects user={user} csrfToken={csrfToken} onUsers={() => setView("users")} onOpenProject={(project) => { setSelectedProject(project); setView("cases"); }} onLogout={handleLogout} />
       ) : <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">Ambiente local · acesso privado</p>
         <h1 id="page-title">QA Test Manager</h1>
