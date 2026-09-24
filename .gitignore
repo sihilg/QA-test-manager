@@ -21,6 +21,8 @@ data/
 uploads/
 evidence/
 work/eva/
+work/qa_exports/
+work/inspect_xlsx.mjs
 .idea/
 .vscode/
 .DS_Store

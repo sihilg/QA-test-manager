@@ -4,7 +4,9 @@ Aplicação web local para gerir projetos, casos de teste, execuções e incidê
 
 ## Estado
 
-Release 1 em desenvolvimento, com modelo de dados, autenticação local e gestão de projetos, utilizadores e casos de teste manuais. A integração da Eva ainda não existe.
+Release 1 em desenvolvimento, com modelo de dados, autenticação local, gestão de projetos, utilizadores, casos de teste manuais e exportação em DOCX, XLSX e PDF. A integração da Eva ainda não existe.
+
+As exportações podem abranger um caso individual ou a lista filtrada do projeto. Os ficheiros são gerados em memória e descarregados pelo browser; não são guardados no repositório nem na base de dados.
 
 ## Arquitetura
 

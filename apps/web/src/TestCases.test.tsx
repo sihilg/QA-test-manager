@@ -28,6 +28,9 @@ describe("TestCases", () => {
 
     await screen.findByText("Filtros aplicados: 0 caso(s) encontrado(s).");
     expect(fetch.mock.calls[1][0]).toBe("/api/projects/1/test-cases?priority=HIGH");
+    expect(screen.getByRole("link", { name: "XLSX" })).toHaveAttribute(
+      "href", "/api/projects/1/test-cases/export/xlsx?priority=HIGH",
+    );
   });
 
   it("creates a manual case and shows its immutable number", async () => {
@@ -47,6 +50,9 @@ describe("TestCases", () => {
 
     await waitFor(() => expect(screen.getByText("CT001")).not.toBeNull());
     expect(screen.getByText("Caso criado com sucesso.")).not.toBeNull();
+    expect(screen.getByRole("link", { name: "Exportar CT001 em PDF" })).toHaveAttribute(
+      "href", "/api/test-cases/1/export/pdf",
+    );
   });
 
   it("shows the server error when a case cannot be saved", async () => {
