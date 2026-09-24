@@ -1,3 +1,5 @@
+from typing import cast
+
 from sqlalchemy import Select, select
 from sqlalchemy.orm import Session
 
@@ -5,7 +7,7 @@ from qa_test_manager.models import Project, TestCase
 
 
 def active_project_cases_statement(project_id: int) -> Select[tuple[TestCase]]:
-    return (
+    statement = (
         select(TestCase)
         .join(Project)
         .where(
@@ -15,6 +17,7 @@ def active_project_cases_statement(project_id: int) -> Select[tuple[TestCase]]:
         )
         .order_by(TestCase.execution_order)
     )
+    return cast(Select[tuple[TestCase]], statement)
 
 
 def list_active_project_cases(session: Session, project_id: int) -> list[TestCase]:

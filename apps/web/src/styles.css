@@ -81,6 +81,12 @@ th { color: #aebdd2; font-size: .8rem; text-transform: uppercase; letter-spacing
 .you-badge { margin-left: .5rem; color: #acd0ff; background: rgb(31 109 255 / 18%); }
 .filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto auto; gap: .75rem; align-items: end; }
 .filters button { margin: 0; }
+.export-panel { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+.export-link, .case-export-links a { display: inline-flex; align-items: center; justify-content: center; min-height: 2.3rem; padding: .45rem .75rem; border: 1px solid #a9bdd5; border-radius: .5rem; color: #e8eef8; background: #243b55; font-size: .85rem; font-weight: 700; text-decoration: none; }
+.export-link:hover, .case-export-links a:hover { background: #315273; }
+.case-row-with-exports { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .75rem; align-items: center; }
+.case-export-links { display: flex; gap: .4rem; }
+.case-export-links a { min-height: 2rem; padding: .3rem .5rem; font-size: .75rem; }
 .case-list { display: grid; gap: .65rem; margin-top: 1rem; }
 .case-row { display: grid; grid-template-columns: 6rem 1fr auto; gap: 1rem; align-items: center; width: 100%; margin: 0; padding: 1rem; color: #e8eef8; text-align: left; background: #0a1829; border: 1px solid #263e5a; }
 .case-row:hover { border-color: #63dfa7; }
@@ -100,7 +106,8 @@ legend { padding: 0 .5rem; color: #aebdd2; font-weight: 700; }
   .shell { padding: 1rem; }
   .app-header, .project-card { align-items: stretch; flex-direction: column; }
   .card-actions { flex-wrap: wrap; }
-  .filters, .case-form { grid-template-columns: 1fr; }
+  .filters, .case-form, .case-row-with-exports { grid-template-columns: 1fr; }
+  .case-export-links { justify-content: flex-end; }
   .span-2 { grid-column: auto; }
   .case-row, .step-row { grid-template-columns: 1fr; }
 }

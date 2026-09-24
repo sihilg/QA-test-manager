@@ -15,6 +15,7 @@ from qa_test_manager.auth import (
     require_csrf,
 )
 from qa_test_manager.database import get_session
+from qa_test_manager.exports import router as exports_router
 from qa_test_manager.projects import router as projects_router
 from qa_test_manager.test_cases import router as test_cases_router
 from qa_test_manager.users import router as users_router
@@ -28,6 +29,7 @@ class HealthResponse(TypedDict):
 app = FastAPI(title="QA Test Manager API", version="0.1.0")
 app.include_router(projects_router)
 app.include_router(test_cases_router)
+app.include_router(exports_router)
 app.include_router(users_router)
 
 
