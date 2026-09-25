@@ -9,6 +9,9 @@ __pycache__/
 .ruff_cache/
 *.egg-info/
 node_modules/
+.playwright-browsers/
+test-results/
+playwright-report/
 dist/
 coverage/
 *.tsbuildinfo

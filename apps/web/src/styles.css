@@ -32,7 +32,7 @@ label, dt { color: #aebdd2; font-size: .85rem; font-weight: 700; }
 input { width: 100%; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
 select { width: 100%; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
 textarea { width: 100%; resize: vertical; padding: .9rem 1rem; border: 1px solid #304763; border-radius: .75rem; color: #e8eef8; background: #07111f; font: inherit; }
-input:focus { outline: 3px solid rgb(99 223 167 / 35%); border-color: #63dfa7; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid rgb(99 223 167 / 55%); outline-offset: 2px; border-color: #63dfa7; }
 .password-field { position: relative; }
 .password-field input { padding-right: 3.25rem; }
 .password-toggle { position: absolute; top: 50%; right: .4rem; display: grid; width: 2.5rem; height: 2.5rem; margin: 0; padding: .55rem; transform: translateY(-50%); place-items: center; color: #aebdd2; background: transparent; }
@@ -110,4 +110,9 @@ legend { padding: 0 .5rem; color: #aebdd2; font-weight: 700; }
   .case-export-links { justify-content: flex-end; }
   .span-2 { grid-column: auto; }
   .case-row, .step-row { grid-template-columns: 1fr; }
+  .dialog-backdrop { padding: .5rem; }
+  .dialog { max-height: 96vh; padding: 1.25rem; overflow-y: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
