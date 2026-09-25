@@ -1,3 +1,5 @@
+from typing import cast
+
 from sqlalchemy import Select, select
 from sqlalchemy.orm import Session
 
@@ -15,7 +17,9 @@ def active_project_cases_statement(project_id: int) -> Select[tuple[TestCase]]:
         )
         .order_by(TestCase.execution_order)
     )
-    return statement
+    # SQLAlchemy 2.x releases expose two equivalent generic shapes for this query.
+    statement_object: object = statement
+    return cast(Select[tuple[TestCase]], statement_object)
 
 
 def list_active_project_cases(session: Session, project_id: int) -> list[TestCase]:
