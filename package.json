@@ -8,6 +8,12 @@
     "build:web": "pnpm --dir apps/web build",
     "lint:web": "pnpm --dir apps/web lint",
     "test:web": "pnpm --dir apps/web test --run",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install chromium",
     "check": "pnpm lint:web && pnpm test:web && pnpm build:web"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0",
+    "@types/node": "22.0.0"
   }
 }
