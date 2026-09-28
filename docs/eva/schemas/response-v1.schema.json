@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qa-test-manager.local/schemas/eva/response-v1.schema.json",
+  "title": "QA Test Manager Eva response package v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "exchange_id", "generated_at", "proposals", "warnings"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "exchange_id": { "type": "string", "format": "uuid" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "warnings": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "minLength": 1, "maxLength": 240 }
+    },
+    "proposals": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/proposal" }
+    }
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "action", "expected_result"],
+      "properties": {
+        "position": { "type": "integer", "minimum": 1 },
+        "action": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "expected_result": { "type": "string", "minLength": 1, "maxLength": 20000 }
+      }
+    },
+    "proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposal_key", "category", "title", "requirement", "priority", "test_type", "test_data", "description", "preconditions", "expected_result", "steps", "assumptions"],
+      "properties": {
+        "proposal_key": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,119}$" },
+        "category": { "enum": ["POSITIVE", "NEGATIVE", "BOUNDARY"] },
+        "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "requirement": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "priority": { "enum": ["HIGH", "MEDIUM", "LOW"] },
+        "test_type": { "enum": ["FUNCTIONAL_POSITIVE", "FUNCTIONAL_NEGATIVE", "BLACK_BOX", "BOUNDARY_VALUE_ANALYSIS"] },
+        "test_data": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "preconditions": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "expected_result": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "steps": { "type": "array", "minItems": 1, "maxItems": 100, "items": { "$ref": "#/$defs/step" } },
+        "assumptions": { "type": "array", "maxItems": 20, "items": { "type": "string", "minLength": 1, "maxLength": 240 } }
+      }
+    }
+  }
+}

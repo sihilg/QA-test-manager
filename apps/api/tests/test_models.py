@@ -5,7 +5,14 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from qa_test_manager.models import Base, Project
+from qa_test_manager.models import (
+    Base,
+    EvaExchange,
+    EvaProposal,
+    EvaProposalCategory,
+    EvaProposalStatus,
+    Project,
+)
 from qa_test_manager.models import TestCase as CaseModel
 from qa_test_manager.models import TestOrigin as Origin
 from qa_test_manager.models import TestPriority as Priority
@@ -107,3 +114,49 @@ def test_archived_projects_and_cases_are_excluded(session: Session) -> None:
 
     assert list_active_project_cases(session, active_project.id) == [active_case]
     assert list_active_project_cases(session, archived_project.id) == []
+
+
+def test_eva_proposal_defaults_to_draft(session: Session) -> None:
+    project = Project(name="Projeto Eva")
+    exchange = EvaExchange(
+        public_id="2ab9fe4e-e926-4fa6-851e-8fd92e318483",
+        project=project,
+    )
+    proposal = EvaProposal(
+        exchange=exchange,
+        proposal_key="cenario-positivo",
+        category=EvaProposalCategory.POSITIVE,
+        payload={"title": "Cenário fictício"},
+    )
+    session.add(proposal)
+    session.commit()
+
+    assert proposal.status is EvaProposalStatus.DRAFT
+    assert proposal.converted_test_case_id is None
+
+
+def test_eva_proposal_key_is_unique_inside_exchange(session: Session) -> None:
+    project = Project(name="Projeto Eva")
+    exchange = EvaExchange(
+        public_id="2ab9fe4e-e926-4fa6-851e-8fd92e318483",
+        project=project,
+    )
+    session.add_all(
+        [
+            EvaProposal(
+                exchange=exchange,
+                proposal_key="repetida",
+                category=EvaProposalCategory.POSITIVE,
+                payload={"title": "Primeira"},
+            ),
+            EvaProposal(
+                exchange=exchange,
+                proposal_key="repetida",
+                category=EvaProposalCategory.NEGATIVE,
+                payload={"title": "Segunda"},
+            ),
+        ]
+    )
+
+    with pytest.raises(IntegrityError):
+        session.commit()

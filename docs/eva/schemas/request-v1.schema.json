@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qa-test-manager.local/schemas/eva/request-v1.schema.json",
+  "title": "QA Test Manager Eva request package v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "exchange_id", "exported_at", "project", "source", "generation_rules"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "exchange_id": { "type": "string", "format": "uuid" },
+    "exported_at": { "type": "string", "format": "date-time" },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "integer", "minimum": 1 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 240 }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "title", "content"],
+      "properties": {
+        "kind": { "enum": ["FREE_TEXT", "DOCUMENT_TEXT"] },
+        "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "content": { "type": "string", "minLength": 1, "maxLength": 20000 }
+      }
+    },
+    "generation_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "required_categories", "maximum_proposals"],
+      "properties": {
+        "language": { "const": "pt-PT" },
+        "required_categories": {
+          "type": "array",
+          "items": { "enum": ["POSITIVE", "NEGATIVE", "BOUNDARY"] },
+          "uniqueItems": true,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "maximum_proposals": { "type": "integer", "minimum": 3, "maximum": 100 }
+      }
+    }
+  }
+}
