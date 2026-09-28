@@ -4,7 +4,7 @@ Aplicação web local para gerir projetos, casos de teste, execuções e incidê
 
 ## Estado
 
-Release 1 em desenvolvimento, com modelo de dados, autenticação local, gestão de projetos, utilizadores, casos de teste manuais e exportação em DOCX, XLSX e PDF. A integração da Eva ainda não existe.
+Release 1 concluída, com modelo de dados, autenticação local, gestão de projetos, utilizadores, casos de teste manuais e exportação em DOCX, XLSX e PDF. A Release 2 começou pelo contrato local e supervisionado de colaboração com a Eva; a interface de troca ainda não existe.
 
 As exportações podem abranger um caso individual ou a lista filtrada do projeto. Os ficheiros são gerados em memória e descarregados pelo browser; não são guardados no repositório nem na base de dados.
 
@@ -114,3 +114,4 @@ A aplicação é executada localmente. O GitHub é apenas um espelho público do
 - [ADR 0002 — Autenticação local](docs/adr/0002-local-authentication.md)
 - [ADR 0003 — Colaboração com a Eva](docs/adr/0003-eva-file-collaboration.md)
 - [Modelo de ameaças](docs/threat-model.md)
+- [Contrato local da Eva](docs/eva/file-contract.md)

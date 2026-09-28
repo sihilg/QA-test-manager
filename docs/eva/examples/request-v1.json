@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "exchange_id": "2ab9fe4e-e926-4fa6-851e-8fd92e318483",
+  "exported_at": "2026-09-25T16:00:00Z",
+  "project": { "id": 1, "name": "Loja fictícia" },
+  "source": {
+    "kind": "FREE_TEXT",
+    "title": "Aplicação de cupão",
+    "content": "Um cupão válido reduz 10% do subtotal. O subtotal mínimo é 20,00 EUR e cada cupão pode ser usado uma vez por encomenda."
+  },
+  "generation_rules": {
+    "language": "pt-PT",
+    "required_categories": ["POSITIVE", "NEGATIVE", "BOUNDARY"],
+    "maximum_proposals": 12
+  }
+}

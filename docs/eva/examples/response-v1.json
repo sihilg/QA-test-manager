@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "exchange_id": "2ab9fe4e-e926-4fa6-851e-8fd92e318483",
+  "generated_at": "2026-09-25T16:05:00Z",
+  "proposals": [
+    {
+      "proposal_key": "cupao-valido",
+      "category": "POSITIVE",
+      "title": "Aplicar cupão válido",
+      "requirement": "Desconto de 10% para subtotal elegível",
+      "priority": "HIGH",
+      "test_type": "FUNCTIONAL_POSITIVE",
+      "test_data": "Subtotal fictício de 50,00 EUR e cupão válido",
+      "description": "Confirma o desconto esperado.",
+      "preconditions": "Cupão ainda não utilizado na encomenda.",
+      "expected_result": "O total passa para 45,00 EUR.",
+      "steps": [{ "position": 1, "action": "Aplicar o cupão ao carrinho.", "expected_result": "É apresentado desconto de 5,00 EUR." }],
+      "assumptions": []
+    },
+    {
+      "proposal_key": "cupao-reutilizado",
+      "category": "NEGATIVE",
+      "title": "Recusar reutilização do cupão",
+      "requirement": "Um cupão só pode ser usado uma vez por encomenda",
+      "priority": "MEDIUM",
+      "test_type": "FUNCTIONAL_NEGATIVE",
+      "test_data": "Encomenda fictícia com cupão já aplicado",
+      "description": "Tenta aplicar novamente o mesmo cupão.",
+      "preconditions": "O cupão já foi aplicado uma vez.",
+      "expected_result": "O segundo desconto é recusado sem alterar o total.",
+      "steps": [{ "position": 1, "action": "Aplicar novamente o cupão.", "expected_result": "É apresentada mensagem de utilização única." }],
+      "assumptions": []
+    },
+    {
+      "proposal_key": "subtotal-minimo",
+      "category": "BOUNDARY",
+      "title": "Aplicar cupão no subtotal mínimo",
+      "requirement": "Subtotal mínimo de 20,00 EUR",
+      "priority": "HIGH",
+      "test_type": "BOUNDARY_VALUE_ANALYSIS",
+      "test_data": "Subtotal fictício de 20,00 EUR",
+      "description": "Valida o limite inferior elegível.",
+      "preconditions": "Cupão válido e ainda não utilizado.",
+      "expected_result": "É aplicado desconto de 2,00 EUR.",
+      "steps": [{ "position": 1, "action": "Aplicar o cupão ao subtotal de 20,00 EUR.", "expected_result": "O total passa para 18,00 EUR." }],
+      "assumptions": ["O valor mínimo é inclusivo."]
+    }
+  ],
+  "warnings": ["Confirmar se o limite mínimo é inclusivo antes da aprovação."]
+}

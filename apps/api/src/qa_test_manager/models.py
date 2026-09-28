@@ -54,6 +54,26 @@ class TestOrigin(StrEnum):
     AUTOMATION_TOOL = "AUTOMATION_TOOL"
 
 
+class EvaExchangeStatus(StrEnum):
+    PREPARED = "PREPARED"
+    EXPORTED = "EXPORTED"
+    RESPONSE_IMPORTED = "RESPONSE_IMPORTED"
+    FAILED = "FAILED"
+
+
+class EvaProposalCategory(StrEnum):
+    POSITIVE = "POSITIVE"
+    NEGATIVE = "NEGATIVE"
+    BOUNDARY = "BOUNDARY"
+
+
+class EvaProposalStatus(StrEnum):
+    DRAFT = "DRAFT"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
+    CONVERTED = "CONVERTED"
+
+
 class Base(DeclarativeBase):
     type_annotation_map = {dict[str, Any]: JSON}
 
@@ -123,6 +143,7 @@ class Project(TimestampMixin, Base):
     members: Mapped[list["ProjectMember"]] = relationship(
         back_populates="project", cascade="all, delete-orphan"
     )
+    eva_exchanges: Mapped[list["EvaExchange"]] = relationship(back_populates="project")
 
     __mapper_args__ = {"version_id_col": version}
 
@@ -230,3 +251,54 @@ class AuditEvent(Base):
 
     actor: Mapped[User | None] = relationship()
     project: Mapped[Project | None] = relationship()
+
+
+class EvaExchange(TimestampMixin, Base):
+    __tablename__ = "eva_exchanges"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    public_id: Mapped[str] = mapped_column(String(36), unique=True, index=True)
+    project_id: Mapped[int] = mapped_column(
+        ForeignKey("projects.id", ondelete="RESTRICT"), index=True
+    )
+    requested_by_user_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"), index=True
+    )
+    request_schema_version: Mapped[str] = mapped_column(String(20), default="1.0")
+    response_schema_version: Mapped[str | None] = mapped_column(String(20))
+    status: Mapped[EvaExchangeStatus] = mapped_column(
+        Enum(EvaExchangeStatus, native_enum=False), default=EvaExchangeStatus.PREPARED
+    )
+    error_code: Mapped[str | None] = mapped_column(String(100))
+
+    project: Mapped[Project] = relationship(back_populates="eva_exchanges")
+    requested_by: Mapped[User | None] = relationship()
+    proposals: Mapped[list["EvaProposal"]] = relationship(
+        back_populates="exchange", cascade="all, delete-orphan"
+    )
+
+
+class EvaProposal(TimestampMixin, Base):
+    __tablename__ = "eva_proposals"
+    __table_args__ = (
+        UniqueConstraint("exchange_id", "proposal_key", name="uq_eva_proposal_exchange_key"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    exchange_id: Mapped[int] = mapped_column(
+        ForeignKey("eva_exchanges.id", ondelete="CASCADE"), index=True
+    )
+    proposal_key: Mapped[str] = mapped_column(String(120))
+    category: Mapped[EvaProposalCategory] = mapped_column(
+        Enum(EvaProposalCategory, native_enum=False)
+    )
+    status: Mapped[EvaProposalStatus] = mapped_column(
+        Enum(EvaProposalStatus, native_enum=False), default=EvaProposalStatus.DRAFT
+    )
+    payload: Mapped[dict[str, Any]] = mapped_column(JSON)
+    converted_test_case_id: Mapped[int | None] = mapped_column(
+        ForeignKey("test_cases.id", ondelete="SET NULL"), unique=True
+    )
+
+    exchange: Mapped[EvaExchange] = relationship(back_populates="proposals")
+    converted_test_case: Mapped[TestCase | None] = relationship()
