@@ -4,7 +4,7 @@ Aplicação web local para gerir projetos, casos de teste, execuções e incidê
 
 ## Estado
 
-Release 1 concluída, com modelo de dados, autenticação local, gestão de projetos, utilizadores, casos de teste manuais e exportação em DOCX, XLSX e PDF. A Release 2 começou pelo contrato local e supervisionado de colaboração com a Eva; a interface de troca ainda não existe.
+Release 1 concluída, com modelo de dados, autenticação local, gestão de projetos, utilizadores, casos de teste manuais e exportação em DOCX, XLSX e PDF. A Release 2 inclui o primeiro fluxo local e supervisionado de colaboração com a Eva: exportação do pedido, importação da resposta, revisão humana e conversão das propostas aprovadas.
 
 As exportações podem abranger um caso individual ou a lista filtrada do projeto. Os ficheiros são gerados em memória e descarregados pelo browser; não são guardados no repositório nem na base de dados.
 
@@ -13,7 +13,7 @@ As exportações podem abranger um caso individual ou a lista filtrada do projet
 - `apps/web`: React, TypeScript e Vite.
 - `apps/api`: FastAPI e Python.
 - `docs`: decisões arquiteturais e documentação do produto.
-- `work/eva`: futura pasta local de troca com a Eva; ignorada pelo Git.
+- `docs/eva`: contrato versionado dos ficheiros trocados com a Eva.
 
 ## Requisitos locais
 
@@ -101,7 +101,22 @@ São criados Admin, Tester e Dev fictícios, um projeto e um caso manual. Nunca 
 3. Aplicar filtros e exportar a lista em DOCX, XLSX e PDF.
 4. Entrar como Tester e confirmar a criação de casos no projeto atribuído.
 5. Entrar como Dev e confirmar o acesso somente de leitura.
-6. Mostrar a auditoria e os testes automatizados no repositório.
+6. Abrir a Eva dentro do projeto, preparar um pedido e descarregar o JSON ou Markdown.
+7. Usar o ficheiro como contexto num cowork com o ChatGPT e importar a resposta JSON.
+8. Rever as propostas; editar ou rejeitar duplicados e aprovar uma proposta para criar um caso com origem `EVA`.
+9. Mostrar a auditoria e os testes automatizados no repositório.
+
+## Fluxo da Eva
+
+A integração não usa API nem controla o ChatGPT. O utilizador transporta os ficheiros pelo browser:
+
+1. Em **Casos de teste**, selecione **Abrir Eva**.
+2. Informe o título e o requisito; depois selecione **Preparar pacote**.
+3. Descarregue o JSON (contrato estruturado) ou Markdown (leitura humana).
+4. Trabalhe com a Eva no ChatGPT e peça uma resposta que respeite `docs/eva/schemas/response-v1.schema.json`.
+5. Importe o JSON devolvido e reveja cada proposta antes de aprovar.
+
+Admin e Tester atribuído podem operar o fluxo. Dev tem acesso somente de leitura. Projetos arquivados não aceitam novos pedidos ou aprovações.
 
 ## Privacidade
 

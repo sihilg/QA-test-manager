@@ -270,6 +270,7 @@ class EvaExchange(TimestampMixin, Base):
         Enum(EvaExchangeStatus, native_enum=False), default=EvaExchangeStatus.PREPARED
     )
     error_code: Mapped[str | None] = mapped_column(String(100))
+    request_payload: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
 
     project: Mapped[Project] = relationship(back_populates="eva_exchanges")
     requested_by: Mapped[User | None] = relationship()

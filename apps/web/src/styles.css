@@ -102,6 +102,16 @@ th { color: #aebdd2; font-size: .8rem; text-transform: uppercase; letter-spacing
 fieldset { padding: 1rem; border: 1px solid #304763; border-radius: .75rem; }
 legend { padding: 0 .5rem; color: #aebdd2; font-weight: 700; }
 .step-row { display: grid; grid-template-columns: 2rem 1fr 1fr auto; gap: .6rem; align-items: center; margin-bottom: .65rem; }
+.eva-downloads { display: flex; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; }
+.file-picker { display: grid; gap: .5rem; }
+.proposal-grid { display: grid; gap: 1rem; margin-top: 1rem; }
+.proposal-card { padding: 1.25rem; border: 1px solid #263e5a; border-radius: 1rem; background: #0a1829; }
+.proposal-card h3 { margin: .8rem 0 .4rem; }
+.proposal-card p { color: #aebdd2; }
+.proposal-card .error { color: #ff9b9b; }
+.proposal-status { display: inline-block; margin-left: .5rem; padding: .2rem .5rem; border-radius: 999px; color: #b9c6d8; background: rgb(130 150 180 / 15%); font-size: .72rem; font-weight: 800; }
+.proposal-status.converted { color: #8ce9bb; background: rgb(66 211 146 / 14%); }
+.proposal-status.rejected { color: #ffb0b0; background: rgb(170 50 65 / 22%); }
 @media (max-width: 640px) {
   .shell { padding: 1rem; }
   .app-header, .project-card { align-items: stretch; flex-direction: column; }
