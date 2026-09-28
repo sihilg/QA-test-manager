@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 
 import { Project, Projects } from "./Projects";
+import { EvaWorkspace } from "./EvaWorkspace";
 import { TestCases } from "./TestCases";
 import { Users } from "./Users";
 
@@ -13,7 +14,7 @@ export function App() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [view, setView] = useState<"projects" | "users" | "cases">("projects");
+  const [view, setView] = useState<"projects" | "users" | "cases" | "eva">("projects");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
@@ -69,7 +70,9 @@ export function App() {
     <main className="shell">
       {user ? (
         view === "cases" && selectedProject ?
-          <TestCases user={user} project={selectedProject} csrfToken={csrfToken} onBack={() => setView("projects")} onLogout={handleLogout} /> :
+          <TestCases user={user} project={selectedProject} csrfToken={csrfToken} onEva={() => setView("eva")} onBack={() => setView("projects")} onLogout={handleLogout} /> :
+        view === "eva" && selectedProject ?
+          <EvaWorkspace user={user} project={selectedProject} csrfToken={csrfToken} onCases={() => setView("cases")} onBack={() => setView("projects")} onLogout={handleLogout} /> :
         view === "users" && user.role === "ADMIN" ?
           <Users currentUser={user} csrfToken={csrfToken} onProjects={() => setView("projects")} onLogout={handleLogout} /> :
           <Projects user={user} csrfToken={csrfToken} onUsers={() => setView("users")} onOpenProject={(project) => { setSelectedProject(project); setView("cases"); }} onLogout={handleLogout} />

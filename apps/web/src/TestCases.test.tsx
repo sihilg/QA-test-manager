@@ -11,7 +11,7 @@ describe("TestCases", () => {
 
   it("shows an empty state for a project without cases", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(jsonResponse(emptyPage));
-    render(<TestCases user={admin} project={project} csrfToken="csrf" onBack={vi.fn()} onLogout={vi.fn()} />);
+    render(<TestCases user={admin} project={project} csrfToken="csrf" onEva={vi.fn()} onBack={vi.fn()} onLogout={vi.fn()} />);
 
     await waitFor(() => expect(screen.getByText("Ainda não existem casos para este projeto.")).not.toBeNull());
   });
@@ -20,7 +20,7 @@ describe("TestCases", () => {
     const fetch = vi.spyOn(globalThis, "fetch")
       .mockResolvedValueOnce(jsonResponse(emptyPage))
       .mockResolvedValueOnce(jsonResponse(emptyPage));
-    render(<TestCases user={admin} project={project} csrfToken="csrf" onBack={vi.fn()} onLogout={vi.fn()} />);
+    render(<TestCases user={admin} project={project} csrfToken="csrf" onEva={vi.fn()} onBack={vi.fn()} onLogout={vi.fn()} />);
     await screen.findByText("Ainda não existem casos para este projeto.");
 
     fireEvent.change(screen.getByLabelText("Filtrar por prioridade"), { target: { value: "HIGH" } });
@@ -39,7 +39,7 @@ describe("TestCases", () => {
       .mockResolvedValueOnce(jsonResponse(emptyPage))
       .mockResolvedValueOnce(jsonResponse({ ...item, project_id: 1, execution_order: 1, executor_id: null, execution_date: null, requirement: "RF-001", browser: null, test_data: "Dados", description: "Descrição", preconditions: "Admin ativo", expected_result: "Sessão iniciada", origin: "MANUAL", is_archived: false, steps: [{ id: 1, position: 1, action: "Entrar", expected_result: "Sessão" }], created_at: "2026-01-01T00:00:00Z", updated_at: "2026-01-01T00:00:00Z" }, 201))
       .mockResolvedValueOnce(jsonResponse({ items: [item], total: 1 }));
-    render(<TestCases user={admin} project={project} csrfToken="csrf" onBack={vi.fn()} onLogout={vi.fn()} />);
+    render(<TestCases user={admin} project={project} csrfToken="csrf" onEva={vi.fn()} onBack={vi.fn()} onLogout={vi.fn()} />);
     await screen.findByText("Ainda não existem casos para este projeto.");
     fireEvent.click(screen.getByRole("button", { name: "Novo caso" }));
 
@@ -60,7 +60,7 @@ describe("TestCases", () => {
     vi.spyOn(globalThis, "fetch")
       .mockResolvedValueOnce(jsonResponse(emptyPage))
       .mockResolvedValueOnce(jsonResponse({ detail: "A ordem de execução já está em uso neste projeto." }, 409));
-    render(<TestCases user={admin} project={project} csrfToken="csrf" onBack={vi.fn()} onLogout={vi.fn()} />);
+    render(<TestCases user={admin} project={project} csrfToken="csrf" onEva={vi.fn()} onBack={vi.fn()} onLogout={vi.fn()} />);
     await screen.findByText("Ainda não existem casos para este projeto.");
     fireEvent.click(screen.getByRole("button", { name: "Novo caso" }));
 

@@ -15,7 +15,7 @@ type TestCase = {
 type CaseItem = Pick<TestCase, "id" | "case_number" | "title" | "priority" | "test_type" | "final_result" | "version">;
 type CasePage = { items: CaseItem[]; total: number };
 
-export function TestCases({ user, project, csrfToken, onBack, onLogout }: { user: User; project: Project; csrfToken: string; onBack: () => void; onLogout: () => void }) {
+export function TestCases({ user, project, csrfToken, onEva, onBack, onLogout }: { user: User; project: Project; csrfToken: string; onEva: () => void; onBack: () => void; onLogout: () => void }) {
   const [cases, setCases] = useState<CaseItem[]>([]);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [message, setMessage] = useState("");
@@ -68,7 +68,7 @@ export function TestCases({ user, project, csrfToken, onBack, onLogout }: { user
 
   const canEdit = user.role !== "DEV";
   return <div className="workspace">
-    <header className="app-header"><div><p className="eyebrow">Projeto · {project.name}</p><h1>Casos de teste</h1><p className="welcome">Crie casos manuais reproduzíveis e acompanhe o resultado.</p></div><div className="header-actions"><button type="button" className="secondary" onClick={onBack}>Projetos</button><button type="button" className="secondary" onClick={onLogout}>Terminar sessão</button></div></header>
+    <header className="app-header"><div><p className="eyebrow">Projeto · {project.name}</p><h1>Casos de teste</h1><p className="welcome">Crie casos manuais reproduzíveis e acompanhe o resultado.</p></div><div className="header-actions"><button type="button" onClick={onEva}>Abrir Eva</button><button type="button" className="secondary" onClick={onBack}>Projetos</button><button type="button" className="secondary" onClick={onLogout}>Terminar sessão</button></div></header>
 
     <section className="panel filters" aria-label="Filtros"><select aria-label="Filtrar por resultado" value={filters.result} onChange={(event) => setFilters({ ...filters, result: event.target.value })}><option value="">Todos os resultados</option><option value="NOT_EXECUTED">Não executado</option><option value="PASSED">Passed</option><option value="FAILED">Failed</option><option value="BLOCKED">Blocked</option></select><select aria-label="Filtrar por prioridade" value={filters.priority} onChange={(event) => setFilters({ ...filters, priority: event.target.value })}><option value="">Todas as prioridades</option><option value="HIGH">Alta</option><option value="MEDIUM">Média</option><option value="LOW">Baixa</option></select><select aria-label="Filtrar por tipo" value={filters.test_type} onChange={(event) => setFilters({ ...filters, test_type: event.target.value })}><option value="">Todos os tipos</option><option value="FUNCTIONAL_POSITIVE">Functional Positive</option><option value="FUNCTIONAL_NEGATIVE">Functional Negative</option><option value="BLACK_BOX">Black Box</option><option value="BOUNDARY_VALUE_ANALYSIS">BVA</option></select><button type="button" disabled={status === "loading"} onClick={() => loadCases(filters, true)}>{status === "loading" ? "A aplicar…" : "Aplicar filtros"}</button><button type="button" className="tertiary" disabled={status === "loading"} onClick={() => { const cleared = { result: "", priority: "", test_type: "" }; setFilters(cleared); void loadCases(cleared, true); }}>Limpar filtros</button>{canEdit && <button type="button" onClick={() => setFormCase("new")}>Novo caso</button>}</section>
 
