@@ -13,7 +13,7 @@
     "check": "pnpm lint:web && pnpm test:web && pnpm build:web"
   },
   "devDependencies": {
-    "@playwright/test": "1.55.0",
+    "@playwright/test": "1.63.0",
     "@types/node": "22.0.0"
   }
 }
